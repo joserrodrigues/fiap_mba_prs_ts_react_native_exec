@@ -1,4 +1,4 @@
-# MBA FIAP Prensencial
+# MBA FIAP Presencial
 
 Código utilizado durante as aulas de React Native ministradas no MBA da FIAP.
 
