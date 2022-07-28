@@ -1,74 +1,67 @@
+import Colors from '../../Utils/Constants/Colors';
 import styled from "styled-components/native";
-import { Button } from "react-native-elements";
+import { Image, SearchBar } from "react-native-elements";
 
-export const MainContainer = styled.View`
+
+export const MainSafeAreaView = styled.SafeAreaView`
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
 `;
 
-export const TopScreen = styled.View`
-  flex: 3;
-  align-content: center;
-  justify-content: center;
+
+export const LoadingBox = styled.ActivityIndicator`
+  margin-top: 30px;
 `;
 
-export const BottomScreen = styled.View`
-  flex: 4;
-  flex-direction: column;
-  justify-content: center;
+export const ContainerItem = styled.TouchableOpacity`
+  margin-bottom: 10px;
 `;
 
-export const FrontImageBackground = styled.View`
-  flex: 1;
-  padding-top: 40px;
-  padding-bottom: 30px;
-  background-color: rgba(0,0,0,0.6);
+export const TextsView = styled.View`
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 2px;
 `;
 
-export const LogoDiv = styled.Text`
-  margin: 20px;
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-  color: red;
-`;
-
-export const LoginBox = styled.View`
-    background-color:rgba(255,255,255,0.8);
-    margin: 35px;
-    border-radius: 15px;
-    border-width: 1px;
-    border-color: red;
-    padding: 20px;
-`;
-
-export const LabelLogin = styled.Text`
-    font-size: 15px;
-    margin-left: 5px;
-    color: #333;
-`;
-
-export const BottomButton = styled.View`
-  height: 60px;
+export const TextNameStyle = styled.View`
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
-export const StyledButton = styled(Button).attrs({
-  buttonStyle: {
-    backgroundColor: "red",
-    borderRadius: 10,
-  },
+export const TextTitle = styled.Text`
+  font-size: 18px;
+`;
+
+export const TextDetail = styled.Text`
+  font-size: 12px;
+`;
+
+export const StyledImage = styled(Image).attrs({
   containerStyle: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
+    width: 50,
+    height: 50,
+    margin: 10,
   },
 })``;
 
-export const StyledImageBackground = styled.ImageBackground`
-  flex: 1;
-  justify-content: center;
+
+export const SeparatorStyled = styled.View`
+    flex: 1;
+    height: 2px;
+    background-color: ${Colors.separatorColor};
+    margin-left: 10px;
+    margin-right: 10px;
 `;
 
+export const StyledSearchBar = styled(SearchBar).attrs({
+  containerStyle: {
+    backgroundColor: Colors.White,
+    marginBottom: 10,
+  },
+  inputContainerStyle: {
+    backgroundColor: Colors.LightGrey,
+    borderRadius: 20,
+  },
+})``;

@@ -1,54 +1,98 @@
 import React, { FC } from 'react';
-import { Input } from 'react-native-elements';
-import { BottomButton, BottomScreen, FrontImageBackground, LabelLogin, LoginBox, LogoDiv, MainContainer, StyledButton, StyledImageBackground, TopScreen } from './HomeStyles';
+import {
+  FlatList,
+  View,
+  RefreshControl,
+} from "react-native";
+import Colors from '../../Utils/Constants/Colors';
 
-const HomeView:FC = () => {
-    return (
-      <MainContainer>
-        <StyledImageBackground
-          source={{
-            uri: "https://previews.123rf.com/images/chagin/chagin1501/chagin150100001/35151812-business-people-working-together.jpg",
-          }}
-          resizeMode="cover"
-        >
-          <FrontImageBackground>
-            <TopScreen>
-              <LogoDiv>RH App</LogoDiv>
-            </TopScreen>
-            <BottomScreen>
-              <LoginBox>
-                <LabelLogin>Login</LabelLogin>
-                <Input
-                  placeholder="email@email.com"
-                  leftIcon={{
-                    type: "font-awesome",
-                    name: "envelope",
-                    color: "red",
-                  }}
-                  placeholderTextColor={"#999"}
-                  autoCompleteType="email"
-                />
-                <LabelLogin>Senha</LabelLogin>
-                <Input
-                  placeholder="ABCabc1234"
-                  leftIcon={{
-                    type: "font-awesome",
-                    name: "lock",
-                    color: "red",
-                  }}
-                  placeholderTextColor={"#999"}
-                  autoCompleteType="password"
-                />
-                <BottomButton>
-                  <StyledButton
-                    title="Login"
+import {
+  MainSafeAreaView,
+  LoadingBox,
+  ContainerItem,
+  TextsView,
+  TextNameStyle,
+  TextTitle,
+  TextDetail,
+  StyledImage,
+  SeparatorStyled,
+  StyledSearchBar,
+} from "./HomeStyles";
+import IPerson from '../../Interfaces/IPerson';
+
+type IProps = {
+  dataConnectionFiltered: IPerson[];
+  isLoading: boolean;
+  goToDetail: (item: IPerson) => void;
+  searchText: string;
+  onSearchUpdate: (text: string) => void;
+  onRefresh: () => void;
+};
+const HomeView:FC<IProps> = ({ dataConnectionFiltered, isLoading, goToDetail, searchText, onSearchUpdate, onRefresh }) => {
+
+    const RenderItem = ({ item }: {item: IPerson}) => {
+
+        return (
+          <ContainerItem onPress={() => goToDetail(item)}>
+            <>
+              <TextsView>
+                <View>
+                  <StyledImage
+                    source={{ uri: item.image }}
                   />
-                </BottomButton>
-              </LoginBox>
-            </BottomScreen>
-          </FrontImageBackground>
-        </StyledImageBackground>
-      </MainContainer>
+                </View>
+                <View>
+                  <TextNameStyle>
+                    <TextTitle>
+                      {item.firstName} {item.lastName}
+                    </TextTitle>
+                  </TextNameStyle>
+                  <TextNameStyle>
+                    <TextDetail>
+                      {item.address} - {item.state} - {item.zipCode}
+                    </TextDetail>
+                  </TextNameStyle>
+                  <TextNameStyle>
+                    <TextDetail>{item.jobTitle}</TextDetail>
+                  </TextNameStyle>
+                </View>
+              </TextsView>
+              <SeparatorStyled />
+            </>
+          </ContainerItem>
+        );
+    }
+
+    let loadingBox = null
+    if (isLoading) {
+        loadingBox = (
+          <LoadingBox
+            size="large"
+            color={Colors.activityColor}
+          />
+        );
+    }
+    return (
+      <MainSafeAreaView>
+        <StyledSearchBar
+          placeholder="Digite Aqui..."
+          //   onChangeText={() => onSearchUpdate("value")}
+          value={searchText}
+          platform="default"
+          onChangeText={(text: string) => onSearchUpdate(text)}
+        />
+        {loadingBox}
+        <FlatList
+          data={dataConnectionFiltered}
+          renderItem={({ item }: { item: IPerson }) => (
+            <RenderItem item={item} />
+          )}
+          keyExtractor={(item) => item.CPF.toString()}
+          refreshControl={
+            <RefreshControl refreshing={false} onRefresh={onRefresh} />
+          }
+        />
+      </MainSafeAreaView>
     );
 };
 
