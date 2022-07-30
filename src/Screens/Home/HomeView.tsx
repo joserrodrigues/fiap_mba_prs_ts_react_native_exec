@@ -19,6 +19,7 @@ import {
   StyledSearchBar,
 } from "./HomeStyles";
 import IPerson from '../../Interfaces/IPerson';
+import DrawerMenu from '../../Components/DrawerMenu/DrawerMenu';
 
 type IProps = {
   dataConnectionFiltered: IPerson[];
@@ -74,6 +75,7 @@ const HomeView:FC<IProps> = ({ dataConnectionFiltered, isLoading, goToDetail, se
     }
     return (
       <MainSafeAreaView>
+        <DrawerMenu />
         <StyledSearchBar
           placeholder="Digite Aqui..."
           //   onChangeText={() => onSearchUpdate("value")}

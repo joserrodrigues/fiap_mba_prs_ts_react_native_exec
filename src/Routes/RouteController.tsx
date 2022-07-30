@@ -2,18 +2,28 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { registerRootComponent } from 'expo';
 
 import Colors from '../Utils/Constants/Colors';
 import HomeController from '../Screens/Home/HomeController';
 import DetailController from '../Screens/Detail/DetailController';
+import MyPositionController from "../Screens/MyPosition/MyPositionController";
 
 export type RootStackParamList = {
   Home: undefined;
   Details: { item: string };
+  MyPosition: undefined;
+};
+
+export type RootDrawerParamList = {
+  Main: undefined;
+  MyInfoDrawer: undefined;
+  MyPositionDrawer: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 function RouteController() {
 
@@ -37,10 +47,35 @@ function RouteController() {
         );
     }
 
+    const StackMyPosition = () => {
+      return (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="MyPosition"
+            component={MyPositionController}
+            options={{ ...screenOptions, title: "Minha Posição" }}
+          />
+        </Stack.Navigator>
+      );
+    };
+
+
+
     return (
-        <NavigationContainer>
-            <StackHome />
-        </NavigationContainer>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="Main">
+          <Drawer.Screen
+            name="Main"
+            component={StackHome}
+            options={{ title: "Main", headerShown: false }}
+          />
+          <Drawer.Screen
+            name="MyPositionDrawer"
+            component={StackMyPosition}
+            options={{ title: "Minha Posição", headerShown: false }}
+          />
+        </Drawer.Navigator>
+      </NavigationContainer>
     );
 }
 
