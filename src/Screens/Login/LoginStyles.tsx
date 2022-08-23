@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { Button } from "react-native-elements";
+import { ImageBackground } from "react-native";
 
 export const MainContainer = styled.View`
   flex: 1;
@@ -23,7 +24,7 @@ export const FrontImageBackground = styled.View`
   flex: 1;
   padding-top: 40px;
   padding-bottom: 30px;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 export const LogoDiv = styled.Text`
@@ -35,18 +36,18 @@ export const LogoDiv = styled.Text`
 `;
 
 export const LoginBox = styled.View`
-    background-color:rgba(255,255,255,0.8);
-    margin: 35px;
-    border-radius: 15px;
-    border-width: 1px;
-    border-color: red;
-    padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 35px;
+  border-radius: 15px;
+  border-width: 1px;
+  border-color: red;
+  padding: 20px;
 `;
 
 export const LabelLogin = styled.Text`
-    font-size: 15px;
-    margin-left: 5px;
-    color: #333;
+  font-size: 15px;
+  margin-left: 5px;
+  color: #333;
 `;
 
 export const BottomButton = styled.View`
@@ -54,21 +55,22 @@ export const BottomButton = styled.View`
   flex-direction: row;
   justify-content: center;
 `;
+export const MessageErrorBox = styled.View``;
+export const MessageError = styled.Text`
+  font-size: 13px;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+`;
 
 export const StyledButton = styled(Button).attrs({
   buttonStyle: {
     backgroundColor: "red",
     borderRadius: 10,
   },
-  containerStyle: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-  },
 })``;
 
-export const StyledImageBackground = styled.ImageBackground`
+export const StyledImageBackground = styled(ImageBackground)`
   flex: 1;
   justify-content: center;
 `;
-
