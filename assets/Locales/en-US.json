@@ -1,0 +1,8 @@
+{
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "distance": "Distance",
+    "meters": "meters",
+    "currentPosition": "Current Position",
+    "descriptionPosition": "Position description"
+}

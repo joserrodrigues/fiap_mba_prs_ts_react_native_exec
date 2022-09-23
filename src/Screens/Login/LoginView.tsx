@@ -57,6 +57,7 @@ const LoginView = ({
       <StyledButton
         title="Login"
         onPress={() => commonForm.current!.submitForm()}
+        testID="loginButton"
       />
     );
     if (messageConnection !== "") {

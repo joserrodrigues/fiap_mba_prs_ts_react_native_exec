@@ -1,10 +1,16 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import React, { useRef } from 'react';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  NavigationContainerRef,
+  useNavigation,
+} from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { registerRootComponent } from 'expo';
 import { Icon } from "react-native-elements";
+import * as Notifications from "expo-notifications";
 
 import Colors from '../Utils/Constants/Colors';
 import HomeController from '../Screens/Home/HomeController';
@@ -19,6 +25,7 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { cleanUser } from "../store/login/LoginSlice";
 import { Provider } from "react-redux";
 import SideMenu from '../Components/SideMenu/SideMenu';
+import { useManageNotification } from "../Services/Notification/ManageNotifications";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -58,8 +65,8 @@ function RouteController() {
         headerLayoutPreset: 'center',
     };
 
-    const dispatch = useAppDispatch();
-    const userInfo = useAppSelector((state) => state.login.user);
+
+
     const onLogout = () => {
       dispatch(cleanUser());
     };
@@ -87,9 +94,29 @@ function RouteController() {
       );
     };
 
+    const receiveNotification = (notification: Notifications.Notification, type: number) => {
+      console.log("Chegou Notificacao");
+      const notificationData = notification.request.content.data;
+      if (notificationData.hasOwnProperty("infoScreen")) {        
+        if (navigationRef.current!.getCurrentRoute()!.name !== "LoginScreen") {
+          navigationRef.current!.navigate("MyPositionDrawer");
+        }
+      } else {
+        console.log("Nnao possui Data");
+      }
+    };
+
+    const navigationRef =
+      useRef<NavigationContainerRef<RootDrawerParamList>>(null);
+
+    const dispatch = useAppDispatch();
+    // const navigation = useNavigation();
+    const userInfo = useAppSelector((state) => state.login.user);
+    useManageNotification({ receiveNotification: receiveNotification });
+
     if (userInfo && userInfo.token !== "") {
       return (
-        <NavigationContainer theme={NavigationTheme}>
+        <NavigationContainer ref={navigationRef} theme={NavigationTheme}>
           <Drawer.Navigator
             initialRouteName="Main"
             drawerContent={(props) => (
@@ -137,7 +164,7 @@ function RouteController() {
       );
     } else {
       return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Stack.Navigator>
             <Stack.Screen
               name="MyPosition"

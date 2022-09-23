@@ -12,6 +12,7 @@ import {
 } from "./MyPositionStyles";
 import DrawerMenu from '../../Components/DrawerMenu/DrawerMenu';
 import MapView, { Marker, Circle, LatLng } from 'react-native-maps';
+import { i18n } from "../../Services/Language/ManageStrings";
 
 type IProps = {
   position: LatLng;
@@ -39,17 +40,20 @@ const MyPositionView:FC<IProps> = ({
     let info = "";
     if (position) {
       info =
-        "Latitude = " +
+        i18n.t("latitude") +
+        " = " +
         position.latitude +
-        " - Longitude = " +
-        position.longitude
+        " - " +
+        i18n.t("longitude") +
+        +" = " +
+        position.longitude;
     }
     infoBox = (
       <>
         <ItemsInfo>
           <TextInfoView>
-            <TextTitle>Distância: </TextTitle>
-            <TextDetail>{radius} mts.</TextDetail>
+            <TextTitle>{i18n.t("distance")}: </TextTitle>
+            <TextDetail>{radius} {i18n.t("meters")}</TextDetail>
           </TextInfoView>
           <StyledSlider
             value={radius}
@@ -86,8 +90,8 @@ const MyPositionView:FC<IProps> = ({
                 latitude: position.latitude,
                 longitude: position.longitude,
               }}
-              title={"Posição Atual"}
-              description={"Descrição da Posição"}
+              title={i18n.t("currentPosition")}
+              description={i18n.t("descriptionPosition")}
               onDragEnd={(e) => updatePosition(e.nativeEvent.coordinate)}
             />
           </MapView>
@@ -98,9 +102,12 @@ const MyPositionView:FC<IProps> = ({
     let info = "";
     if (position) {
       info =
-        "Latitude = " +
+        i18n.t("latitude") +
+        " = " +
         position.latitude +
-        " - Longitude = " +
+        " - " +
+        i18n.t("longitude") +
+        +" = " +
         position.longitude;
     }    
     infoBox = (

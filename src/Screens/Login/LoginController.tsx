@@ -45,6 +45,7 @@ const LoginController = () => {
           console.log("After Login");
           console.log(user);
           console.log(user.token);
+          setMessageErrorConnection("Login com Sucesso");
           dispatch(setUser({ user }));
         }
         setIsLoadingAuth(false);
